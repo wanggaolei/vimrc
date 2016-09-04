@@ -1,0 +1,60 @@
+" 映射快捷键代替使用<Esc>退出插入模式
+inoremap jk <ESC>
+
+" 修改leader键
+let mapleader = ","
+nnoremap <leader>c :nohl<CR>
+
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" 避免按键误操作
+inoremap <F1> <ESC>
+nnoremap <F1> <ESC>
+vnoremap <F1> <ESC>
+
+filetype plugin indent on
+
+syntax on
+
+" 提示信息和命令返回信息设置为英文
+let $LANG='en'
+language message en_US.UTF-8
+
+" 打开文件时，解码顺序，中文
+set encoding=utf-8
+let &termencoding=&encoding
+set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+
+" 设置‘空’字符显示
+" 设置tab为>-格式,用行结尾为$, 空格结尾显示为•，后面两个没懂
+set listchars=tab:>-,eol:$,trail:•,extends:#,nbsp:.
+
+" 一些特殊字符占位为2个ASCII字符宽，和
+"set ambiwidth=double
+
+" Set to auto read when a file is changed from the outside
+set autoread
+
+" 打开文件时自动切换到文件所在路径
+set autochdir
+
+" 关闭英文语法拼写
+set nospell
+
+colorscheme evening
+
+set foldenable
+set foldlevel=99
+set foldmethod=manual
+
+" 设置Python执行快捷键
+nnoremap <buffer> <F9> :exec '!C:\Python34\Lib\idlelib\idle.bat -r' @%<cr>
+
+" 启动默认最大化窗口
+au GUIEnter * simalt ~x
+
+
+
