@@ -1,16 +1,9 @@
-﻿"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => General
-" => 通用设置
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 取消兼容Vi设置，避免命令冲突
-set nocompatible
-
+﻿
 " Sets how many lines of history VIM has to remember
-" 设置vim存储的历史命令记录的条数
-set history=700
 
 " 取消编辑文件备份
 set nobackup
+
 
 " Enable filetype plugins
 filetype plugin on
@@ -134,6 +127,10 @@ set columns=100
 " like <leader>w saves the current file
 let mapleader = ","
 let g:mapleader = ","
+
+
+noremap oo o<esc>
+
 
 map <leader>b wbi{<Esc>ea}<Esc>
 " Fast saving
