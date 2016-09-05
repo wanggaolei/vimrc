@@ -186,7 +186,6 @@ set tags=/home/www/tags
 set tags+=tags,./tags,tags                 " 分号必须,让vim递归向上查找tags
 map <F8> :!ctags -R<CR>
 nnoremap <silent> <S-F8> :!ctags -R<CR>
-set autochdir
 "}}
 "                                           " 只在下列文件类型被侦测时显示行号,普通文本文件不显示
 "{{

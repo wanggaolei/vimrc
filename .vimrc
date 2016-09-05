@@ -23,7 +23,7 @@ if v:progname =~? "evim"
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 1 =>  Behavior
+" 1 =>  Behavior {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible                        " 取消兼容Vi设置，避免命令冲突
 set history=1000                        " 设置vim存储的历史命令记录的条数
@@ -31,7 +31,7 @@ set confirm                             " 处理为保存或只读文件的时�
 filetype off                            " 检测文件的类型,vundle 关闭,其它on
 filetype plugin on                      " 载入ftplugin文件类型插件
 filetype indent on                      " 为特定文件类型载入相关缩进文件
-filetype plugin indent off
+filetype plugin indent on               " 使用vundle是需要设置off 
 set binary                              " 可读二进制文件
 set backupcopy=yes                      " 设置备份时的行为为覆盖autobackup cover "set nowritebackup
 set mouse=a                             " 可以在buffer的任何地方使用鼠标
@@ -59,6 +59,8 @@ set undodir=$HOME/.vim/undofile
 " set formatoptions=tcrqn                     " 自动格式化
 set autoindent                          " 自动对齐,继承前一行的缩进
 set smartindent                         " 智能对齐
+set cindent                             " 使用c样式的缩进
+set cinoptions={0,1s,t0,n-2,p2s,(03s,=.5s,>1s,=1s,:1s
 set tabstop=4                           " 设置tab为4个空格
 " set backspace=2                         " 可以使用backspace键一次删2个
 set whichwrap+=<,>,[,]                  " 允许backspace和光标键跨越行边界
@@ -67,30 +69,21 @@ set softtabstop=4                       " 统一缩进为4个空格
 set smarttab                            " 在行和段开始处使用制表符
 set autoread                            " 设置当文件被改动时自动载入
 set autochdir                           " 设置打开文件后自动切换到文件所在目录
-set cindent                             " 使用c样式的缩进
-set cinoptions={0,1s,t0,n-2,p2s,(03s,=.5s,>1s,=1s,:1s
 "{{ 用空格来代替制表符tab noexpandtab是不用空格代替制表符tab
 set expandtab                               
 "}}
 
-noremap <space> i<space><esc>
+noremap <space> i<space><esc>l
+noremap oo o<esc>
 
+" }}}
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  2 => Encoding Configure {{{
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
-set enc=utf-8                               " vim 支持中文 内部编码
+set fileformat=unix                         " windows 下会导致编码失败
+set encoding=utf-8                               " vim 支持中文 内部编码
 set termencoding=utf-8                      " work in linux
-set fenc=utf-8                              " work in linux 解析出来的当前文件编码(可能解析错误)
-set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936    " 文件解析猜测识别的编码顺序
-set langmenu=zh_CN.UTF-8                    " Console output coding
-" language message zh_CN.UTF-8                " 控制台console编码
-set ambiwidth=double                        " 把不明宽度字符设置为双倍字符宽度(中文字符宽度)
-set fileencoding=utf-8                      " 当前编辑的文件编码(新文件的编码)
-set fileencodings=usc-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin-1
-
-                                            " 当前编辑的文件自动判断依次尝试编码, 打开时可以指定编码
-set encoding=utf-8                          " work in linux
-set imcmdline
+set fileencodings=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936    " 文件解析猜测识别的编码顺序
 "{{                                         " work in linux
 if has("win32")
     set fileencoding=chinese
@@ -98,10 +91,12 @@ else
     set fileencoding=utf-8
 endif
 "}}
-set fileformat=unix                         " windows 下会导致编码失败
+set ambiwidth=double                        " 把不明宽度字符设置为双倍字符宽度(中文字符宽度)
+set imcmdline
+" set langmenu=zh_CN.UTF-8                    " Console output coding
+" language message zh_CN.UTF-8                " 控制台console编码
 source $VIMRUNTIME/delmenu.vim              " 解决菜单乱码
 source $VIMRUNTIME/menu.vim
-set nocompatible                            " 不要使用vi的键盘模式
 "set clipboard+=unnamed                     " 与windows共享剪贴板share clipboard with windows
 "set iskeyword+=_,$,@,%,#,-                 " 带有如下符号的单词不要被换行分割
 set iskeyword+=_,$,@,%,#,-                  " 带有如下符号的单词不要被换行分割
@@ -116,46 +111,25 @@ set viminfo='1000,f1,<500
 "}}
 "}}}
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 3 => Text Pattern {{{
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set wrap                                " 自动换行
-set linebreak                           " 整词换行
-set textwidth=100                       " 每行显示多少字符
-set relativenumber                      " 相对行号
-set colorcolumn=101                     " 红色高亮第101行.
-set scrolloff=3                         " 光标移动到buffer的顶部和底部时保持3行距离
-set foldenable                          " 开始折叠
-set foldcolumn=0                        " 设置折叠区域的宽度
-setlocal foldlevel=1                    " 设置折叠层数为
-" set foldclose=all                       " 设置为自动关闭折叠
-"{{折叠
-"  marker  语法定义折叠
-"  manual  手工定义折叠
-"  indent  更多的缩进表示更高级别的折叠,相同的缩进中代码会被折叠
-"  expr    用表达式来定义折叠
-"  syntax  用语法高亮来定义折叠
-"  diff    对没有更改的文本进行折叠
-"  marker  对文中的标志折叠,标记折叠方法
-set foldmethod=marker              
-"}}
-"{{ 用空格键来开关折叠
-" nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
-"}}
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"  4 => Display {{{
+"  3 => Display {{{
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 set bufhidden=hide                      " 当buffer丢弃时隐藏它
 set linespace=0                         " 字符间插入的像素行数目
-" set wildmenu                             " 增强模式中的命令行自动完成操作,状态栏预览
+set wildmenu                             " 增强模式中的命令行自动完成操作,状态栏预览
 " set shortmess=atI                        " 启动的时候不显示援助索马里儿童提示
 colorscheme desert                          " 设置配色方案
 set background=dark                         " 设置背景为黑
 set novisualbell                            " No mouseflash
-set number                                  " 设置行号
-set showcmd                                 " display incomplete commands
+set wrap                                " 自动换行
+set linebreak                           " 整词换行
+set textwidth=100                       " 每行显示多少字符
 set cursorline                              " 高亮显示当前行
 set cursorcolumn                            " 高亮光标列
+set colorcolumn=101                     " 红色高亮第101行.
+set scrolloff=3                         " 光标移动到buffer的顶部和底部时保持3行距离
+set number                                  " 设置行号
+set relativenumber                      " 相对行号
+set showcmd                                 " display incomplete commands
 syntax enable                               " 启用语法高亮
 syntax on                                   " 设置语法高亮
 "{{                                         " 高亮字符,让其不受100列限制
@@ -167,9 +141,7 @@ au BufRead,BufNewFile * setfiletype txt     " work in linux
 set syntax=txt                              " work in linux
 au BufRead,BufNewFile *.txt setlocal ft=txt
 "                                           " 高亮显示普通txt文件(需要txt.vim脚本)
-"                                           " 自动.c .h .sh .java自动插入文件头
-autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java,*.lua,*.py,*.php exec ":call SetTitle()" 
-"                                           " 定义函数SetTitle,自动插入文件头 
+"
 set guioptions-=m                           " 去除vim的GUI版本中的toolbar
 set guioptions-=T
 map <silent> <F2> :if &guioptions =~# 'T' <Bar>
@@ -222,10 +194,26 @@ set virtualedit=block                       " block 允许可视列块模式的�
                                             " all 允许所有模式的虚拟编辑
                                             " onemore 允许光标移动到刚刚超过行尾的位置
 "}}
+set foldenable                          " 开始折叠
+set foldcolumn=0                        " 设置折叠区域的宽度
+setlocal foldlevel=1                    " 设置折叠层数为
+" set foldclose=all                       " 设置为自动关闭折叠
+"{{折叠
+"  marker  语法定义折叠
+"  manual  手工定义折叠
+"  indent  更多的缩进表示更高级别的折叠,相同的缩进中代码会被折叠
+"  expr    用表达式来定义折叠
+"  syntax  用语法高亮来定义折叠
+"  diff    对没有更改的文本进行折叠
+"  marker  对文中的标志折叠,标记折叠方法
+set foldmethod=marker              
+"}}
+"{{ 用空格键来开关折叠
+" nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
+"}}
 "}}}
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
-"  5 => Search Match {{{
+"  4 => Search Match {{{
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 set showmatch                               " 高亮显示匹配的括号
 set matchtime=5                             " 匹配括号高亮的时间(单位是十分之一秒)
@@ -235,7 +223,7 @@ set incsearch                               " 在 搜索时,输入的词句的�
 set nowrapscan                              " 禁止搜索到文件两端时重新搜索
 "}}}
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Appendix => Help {{{ 
+" Appendix => Help {{{
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{折叠相关的说明
 "    zf 创建折叠
@@ -279,7 +267,6 @@ set nowrapscan                              " 禁止搜索到文件两端时重�
 "    `[ 最后修改的位置的开头
 "    `] 最后修改的位置的结尾
 "}}
-"}}}
 
 "{{                                         " all shortcuts
 " :s/^/#                                    " 用'#'注释当前行
@@ -664,3 +651,4 @@ set nowrapscan                              " 禁止搜索到文件两端时重�
 "                                           " :/<html>/,/<\/html>/p  ex接受模式地址.还可以接受偏移量{address}    :/<html>/+1,/<\/html>/-1p
 "                                           " ex 的地址  1文件第一行 $文件最后一行   0虚拟行,位于文件第一行上方  .光标所在行 'm包含位置标记m的行 '<高亮选区的起始行 >'高亮选区的结束行 %整个文件(:1,$的简写形式)
 "}}
+"}}}
