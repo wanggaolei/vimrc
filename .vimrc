@@ -1,8 +1,19 @@
 " An example for a vimrc file.
 "
-" Maintainer:	Bram Moolenaar <Bram@vim.org>
-" Modified: Wang Gaolei <wanggaolei@hotmail.com>
-" Last change:	2016 Sep 5
+" * For vim Configuration file
+
+" * VIM 7.4
+
+" * @filename   vimrc
+" * @author     Rainy Sia <rainysia@gmail.com>
+" * @modified   Wang Gaolei <wanggaolei@hotmail.com>
+" * @copyright  2013-2016 BTROOT.ORG
+" * @license    https://opensource.org/licenses/MIT license
+" * @version    GIT: 7.09.08
+" * @createTime 2008-04-01 02:14:55
+" * @lastChange 2016-09-06 02:28:27
+
+" * @link http://www.btroot.org
 "
 " To use it, copy it to
 "     for Unix and OS/2:  ~/.vimrc
@@ -22,28 +33,34 @@ if v:progname =~? "evim"
   finish
 endif
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 1 =>  Behavior {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible                        " 取消兼容Vi设置，避免命令冲突
+set tabpagemax=15                       " 最大标签页个数
+set nojoinspaces                        " 遇到punctuation时,禁用J合并语句插入两个空格
+set splitright                          " 分割窗口在右侧
+set splitbelow                          " 分割窗口在下侧
+set showmode                            " 显示当前模式, 默认显示
 set history=1000                        " 设置vim存储的历史命令记录的条数
 set confirm                             " 处理为保存或只读文件的时候弹出确定comfirm
-filetype off                            " 检测文件的类型,vundle 关闭,其它on
+" filetype off                            " 检测文件的类型,vundle 关闭,其它on
 filetype plugin on                      " 载入ftplugin文件类型插件
 filetype indent on                      " 为特定文件类型载入相关缩进文件
-filetype plugin indent on               " 使用vundle是需要设置off 
-set binary                              " 可读二进制文件
+filetype plugin indent on               " 使用vundle时需要设置off 
 set backupcopy=yes                      " 设置备份时的行为为覆盖autobackup cover "set nowritebackup
 set mouse=a                             " 可以在buffer的任何地方使用鼠标
+set mousehide                           " 在GUI模式下隐藏鼠标
 set selection=exclusive                 " 光标所在位置也属于被选中的范围
 set selectmode=mouse,key                " 鼠标键盘可用
-setlocal noswapfile                     " 关闭临时文件,不生成swap文件,
+set noswapfile                          " 关闭临时文件,不生成swap文件,
 set noerrorbells                        " 不让vim发出讨厌的滴滴声 set noeb
 set nobomb                              " 不使用unicode BOM
 
-set nobackup                            " 不进行文件备份
+set nobackup                            " 取消编辑文件备份
 set undofile
-set undolevels=1000                     " undo 记忆1000
+set undolevels=1000                     " undo 记忆1000,即默认值
+set undoreload=10000                    " undo reload 保存buffer值10000,即默认值
 let g:data_dir = $HOME . '/.vim/'
 let g:undo_dir = g:data_dir . 'undofile'
 if finddir(g:data_dir) == ''
@@ -52,98 +69,178 @@ endif
 if finddir(g:undo_dir) == ''
     silent call mkdir(g:undo_dir)
 endif
+let &undodir=g:undo_dir
 unlet g:undo_dir
 unlet g:data_dir
-set undodir=$HOME/.vim/undofile
 
-" set formatoptions=tcrqn                     " 自动格式化
+" default c,r,o,q,l
+set formatoptions+=tcroqln              " 自动格式化
 set autoindent                          " 自动对齐,继承前一行的缩进
 set smartindent                         " 智能对齐
 set cindent                             " 使用c样式的缩进
 set cinoptions={0,1s,t0,n-2,p2s,(03s,=.5s,>1s,=1s,:1s
-set tabstop=4                           " 设置tab为4个空格
-" set backspace=2                         " 可以使用backspace键一次删2个
-set whichwrap+=<,>,[,]                  " 允许backspace和光标键跨越行边界
-set shiftwidth=4                        " 设置行间交错为4个空格
-set softtabstop=4                       " 统一缩进为4个空格
+set tabstop=4                           " 文本显示时，一个tab对应4个空格
+set expandtab                           " 键盘上按tab键，实际输入tabstop个空格
+"{{ set backspace=2                     " 可以使用backspace键一次删2个
+" 退格键可以删除行首缩进，前一行行末换行，插入模式之前已经存在的字符
+set backspace=indent,eol,start
+"}}
+set whichwrap=b,s,<,>,[,]               " 允许backspace, space和光标键跨越行边界,不允许h,l跨界
+"{{ Number of spaces to use for each step of (auto)indent.  Used for 'cindent', >>, <<, etc.
+set shiftwidth=4                        " 自动缩进时，每个缩进尺度
+"}}
+set softtabstop=4                       " 在按退格键时，如果前面满足4个空格，则会一次性清除
+"{{ smarttab on在行首输入tab时，插入的空格数以shiftidth为准
+" smarttab off在行首输入tab时，插入的空格数以tabstop或softtabstop数为准
 set smarttab                            " 在行和段开始处使用制表符
+"}}
 set autoread                            " 设置当文件被改动时自动载入
 set autochdir                           " 设置打开文件后自动切换到文件所在目录
-"{{ 用空格来代替制表符tab noexpandtab是不用空格代替制表符tab
-set expandtab                               
+"{{ 在执行宏命令时，不进行实时重绘；
+" 在宏命令执行完成后，一次性重绘，以便提高性能。
+set lazyredraw
 "}}
+" }}}
+"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"  2 => Shortcuts(快捷键设置) {{{
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" With a map leader it's possible to do extra key combinations
+" like <leader>w saves the current file
+let mapleader = ","
+let g:mapleader = ","
 
+" ;等同于:
+nnoremap ; :
+
+" 在单词上加上{}
+map <leader>b wbi{<Esc>ea}<Esc>
+
+" Fast saving
+nmap <leader>w :w!<cr>
+
+" 映射快捷键代替使用<Esc>退出插入模式
+inoremap jk <ESC>
+
+" Wrapped lines goes down/up to next row, rather than next line in file.
+noremap j gj
+noremap k gk
+
+" 窗口切换快捷键
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" 避免按键误操作
+inoremap <F1> <ESC>
+nnoremap <F1> <ESC>
+vnoremap <F1> <ESC>
+
+" 普通模式下，空格即插入空格
 noremap <space> i<space><esc>l
+
+" 普通模式下快速插入一个空行
 noremap oo o<esc>
 
-" }}}
+" 设分割的窗口等大小
+map <Leader>= <C-w>=
+
+" 在调试期间比较有用
+" map <leader>e :vsplit! ~/.vimrc<cr>
+
+" 取消高亮, 放弃c关键字，因为nerdcommenter使用<leader>c作为开始
+" noremap <leader>c :nohl<cr>
+" noremap <leader><space> :nohl<cr>
+" noremap <leader><cr> :nohl<cr>
+noremap <silent> <leader>/ :set invhlsearch<CR>
+
+nnoremap <tab> %
+vnoremap <tab> %
+" nnoremap <leader><leader> <c-^>
+"}}}
+"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
-"  2 => Encoding Configure {{{
+"  3 => Encoding Configure {{{
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
-set fileformat=unix                         " windows 下会导致编码失败
-set encoding=utf-8                               " vim 支持中文 内部编码
-set termencoding=utf-8                      " work in linux
-set fileencodings=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936    " 文件解析猜测识别的编码顺序
-"{{                                         " work in linux
+" set binary                            " 可读二进制文件,设置后,ffs和ff都失效
+set fileformats=unix,dos,mac            " 自动识别Unix和MS-dos格式文件,未设置ff时，第一个即为ff值
+set fileformat=unix                     " 当ffs是空并且binary是off时,新建一个文件参考值
+set encoding=utf-8                      " vim 支持中文 内部编码
+set termencoding=utf-8                  " work in linux
+set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1 " 文件解析猜测识别的编码顺序
+"{{                                     " work in linux
 if has("win32")
     set fileencoding=chinese
 else
     set fileencoding=utf-8
 endif
 "}}
-set ambiwidth=double                        " 把不明宽度字符设置为双倍字符宽度(中文字符宽度)
+set ambiwidth=single                    " 把不明宽度字符设置为双倍字符宽度(中文字符宽度)
 set imcmdline
-" set langmenu=zh_CN.UTF-8                    " Console output coding
-" language message zh_CN.UTF-8                " 控制台console编码
-source $VIMRUNTIME/delmenu.vim              " 解决菜单乱码
+let $LANG='en'
+set langmenu=en
+"language message en_US.UTF-8           " 消息语言受当前环境变量设置影响
+source $VIMRUNTIME/delmenu.vim          " 解决菜单乱码
 source $VIMRUNTIME/menu.vim
-"set clipboard+=unnamed                     " 与windows共享剪贴板share clipboard with windows
-"set iskeyword+=_,$,@,%,#,-                 " 带有如下符号的单词不要被换行分割
-set iskeyword+=_,$,@,%,#,-                  " 带有如下符号的单词不要被换行分割
+"set clipboard+=unnamed                 " 设置后，yy直接覆盖"*寄存器无需明显制定
+set iskeyword+=_,$,@,%,#,-              " 带有如下符号的单词不要被换行分割
 nmap <f7> :set iskeyword-=_,$,@,%,#,-,<CR>
-                                            " 设置以上面符号为分割, 可以set iskeyword查看当前换行的,
-                                            " -是删除掉, +是添加.
+                                        " 设置以上面符号为分割, 可以set iskeyword查看当前换行的,
+                                        " -是删除掉, +是添加.
 nmap <s-f7> :set iskeyword+=_,$,@,%,#,-,<CR>
-                                            " 设置不以上面符号为分割
-"{{                                         " 保存全局变量," 寄存器中保存几行文本 0不保存500上限
+                                        " 设置不以上面符号为分割
+"{{                                     " 保存全局变量," 寄存器中保存几行文本 0不保存500上限
 set viminfo+=!
 set viminfo='1000,f1,<500
 "}}
 "}}}
+"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
-"  3 => Display {{{
+"  4 => Display {{{
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
+set guicursor=a:block-blinkon0          " 禁止所有模式下光标闪烁
 set bufhidden=hide                      " 当buffer丢弃时隐藏它
 set linespace=0                         " 字符间插入的像素行数目
-set wildmenu                             " 增强模式中的命令行自动完成操作,状态栏预览
-" set shortmess=atI                        " 启动的时候不显示援助索马里儿童提示
-colorscheme desert                          " 设置配色方案
-set background=dark                         " 设置背景为黑
-set novisualbell                            " No mouseflash
-set wrap                                " 自动换行
+" set shortmess=atI                     " 启动的时候不显示援助索马里儿童提示
+colorscheme desert                      " 设置配色方案
+set background=dark                     " 设置背景为黑
+set novisualbell                        " No mouseflash
+set nowrap                              " 禁用自动换行
 set linebreak                           " 整词换行
 set textwidth=100                       " 每行显示多少字符
-set cursorline                              " 高亮显示当前行
-set cursorcolumn                            " 高亮光标列
+set cursorline                          " 高亮显示当前行
+set cursorcolumn                        " 高亮光标列
+"{{ 自动调整窗口高亮行和列
+autocmd WinLeave * set nocursorline nocursorcolumn
+autocmd WinEnter * set cursorline cursorcolumn
+"}}
 set colorcolumn=101                     " 红色高亮第101行.
 set scrolloff=3                         " 光标移动到buffer的顶部和底部时保持3行距离
-set number                                  " 设置行号
+set number                              " 设置行号
 set relativenumber                      " 相对行号
-set showcmd                                 " display incomplete commands
-syntax enable                               " 启用语法高亮
-syntax on                                   " 设置语法高亮
-"{{                                         " 高亮字符,让其不受100列限制
+set showcmd                             " 将输入的命令显示出来，便于查看当前输入的信息
+"{{ 按编程语言的语法，对代码进行色彩标示，术语叫做语法高亮
+" 清除语法高亮, syntax clear
+" set syntax=off
+syntax enable                           " 启用语法高亮
+syntax on                               " 设置语法高亮
+"}}
+"{{                                     " 高亮字符,让其不受100列限制
 highlight OverLength ctermbg=darkgray ctermfg=lightblue guibg=#1C1D1E guifg=#DCDCDC
 match OverLength '\%500v.*'
 "}}
-"{{                                         " 高亮显示普通txt文件(需要txt.vim脚本)
-au BufRead,BufNewFile * setfiletype txt     " work in linux
-set syntax=txt                              " work in linux
-au BufRead,BufNewFile *.txt setlocal ft=txt
-"                                           " 高亮显示普通txt文件(需要txt.vim脚本)
+"{{                                     " 高亮显示普通txt文件(需要txt.vim脚本)
+autocmd BufRead,BufNewFile * setfiletype txt " work in linux
+" set syntax=txt                          " work in linux
+autocmd BufRead,BufNewFile *.txt setlocal ft=txt
+"                                       " 高亮显示普通txt文件(需要txt.vim脚本)
 "
-set guioptions-=m                           " 去除vim的GUI版本中的toolbar
-set guioptions-=T
+"{{ 设置gui界面
+set guioptions-=T                       " 把gui的工具栏去掉
+set guioptions-=m                       " 把gui的菜单去掉
+set guioptions-=r                       " 把gui的右边的滑动条去掉
+set guioptions-=L                       " 把gui的左边的滑动条去掉
 map <silent> <F2> :if &guioptions =~# 'T' <Bar>
         \set guioptions-=T <Bar>
         \set guioptions-=m <bar>
@@ -151,15 +248,26 @@ map <silent> <F2> :if &guioptions =~# 'T' <Bar>
         \set guioptions+=T <Bar>
         \set guioptions+=m <Bar>
     \endif<CR>
-"{{                                         " 状态栏
-set laststatus=2                            " 总是显示状态栏,默认1无法显示
-"                                           " 我的状态行显示的内容(包括文件类型和解码)
-set ruler                                   " 在状态行上显示光标所在位置的行号和列号
-set rulerformat=%20(%2*%<%f%=\ %m%r\ %3l\ %c\ %p%%%)
-set cmdheight=2                             " 命令行(在状态行下)的高度,默认为1,这里是2
-"set report=0                               " 通过使用: commands命令,告诉我们文件的哪一行被改变过
 "}}
-"{{                                         " 空格的缩进颜色
+"{{                                     " 状态栏
+" 底部状态栏显示。1为关闭，2为开启
+" 0: never
+" 1: only if there are at least two windows
+" 2: always
+set cmdheight=2                         " 命令行(在状态行下)的高度,默认为1,这里是2
+set ruler                               " 在状态行上显示光标所在位置的行号和列号
+set laststatus=2                        " 总是显示状态栏,默认1无法显示
+"                                       " 我的状态行显示的内容(包括文件类型和解码)
+" Broken down into easily includeable segments
+" set statusline=%<%f\                     " Filename
+" set statusline+=%w%h%m%r                 " Options
+" set statusline+=\ [%{&ff}/%Y]            " Filetype
+" set statusline+=\ [%{getcwd()}]          " Current dir
+" set statusline+=%=%-14.(%l,%c%V%)\ 0x%B\ %p%%  " Right aligned file nav info
+set statusline=%<%F\ %h%m%r%=\|%{&fileencoding?&fileencoding:&encoding}\|%{&fileformat}\|%y\ %-14.(%l,%c%V%)\ %P\ 0x%B
+set report=0                            " 通过使用: commands命令,告诉我们文件的哪一行被改变过
+"}}
+"{{                                     " 空格的缩进颜色
 "indent color
 hi 4spa guibg = #771144
 hi 8spa guibg = #22464A
@@ -177,7 +285,8 @@ syn match 16spa /\s\&\%16v.*\%17v/
 syn match 20spa /\s\&\%20v.*\%21v/
 syn match 24spa /\s\&\%24v.*\%25v/
 syn match 80spa /.\&\%80v.*\%81v/
-set list                                    " 缩进线
+
+set list                                " 缩进线
 "set listchars=tab:\|\ ,trail:.,extends:>,precedes:<,eol:$
 " 制表符显示方式定义: trail为拖尾空白显示字符,extends和precedes分别是wrap关闭时,所在行在屏幕右边和左边显示的指示字符
 " set listchars=tab:▸\ ,eol:¬ 
@@ -186,18 +295,21 @@ set list                                    " 缩进线
 " ☠	U+2620	skull and crossbones
 " ❤	U+2764	heavy black heart
 " ‽	U+203d	interobang
-set listchars=tab:\|\ ,trail:.,extends:>,precedes:<
+" set listchars=tab:>-,eol:$
+" 设置tab为>-格式,用行结尾为$, 空格结尾显示为?，后面两个没懂
+set listchars=tab:>-,eol:$,trail:·,extends:>,precedes:<,nbsp:.
+" set listchars=tab:\|\ ,trail:.,extends:>,precedes:<,eol:$
 "}}
 "{{
-set virtualedit=block                       " block 允许可视列块模式的虚拟编辑
-                                            " insert 允许插入模式的虚拟编辑
-                                            " all 允许所有模式的虚拟编辑
-                                            " onemore 允许光标移动到刚刚超过行尾的位置
+set virtualedit=block                   " block 允许可视列块模式的虚拟编辑
+                                        " insert 允许插入模式的虚拟编辑
+                                        " all 允许所有模式的虚拟编辑
+                                        " onemore 允许光标移动到刚刚超过行尾的位置
 "}}
 set foldenable                          " 开始折叠
 set foldcolumn=0                        " 设置折叠区域的宽度
-setlocal foldlevel=1                    " 设置折叠层数为
-" set foldclose=all                       " 设置为自动关闭折叠
+set foldlevel=1                    " 设置折叠层数为
+" set foldclose=all                     " 设置为自动关闭折叠
 "{{折叠
 "  marker  语法定义折叠
 "  manual  手工定义折叠
@@ -206,22 +318,41 @@ setlocal foldlevel=1                    " 设置折叠层数为
 "  syntax  用语法高亮来定义折叠
 "  diff    对没有更改的文本进行折叠
 "  marker  对文中的标志折叠,标记折叠方法
-set foldmethod=marker              
+set foldmethod=marker
 "}}
 "{{ 用空格键来开关折叠
 " nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
 "}}
+" 关闭英文语法拼写
+set nospell
+"{{                                         " 启动后自动最大化
+if has("win32")
+    autocmd GUIEnter * simalt ~x
+endif
+"}}
 "}}}
+"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
-"  4 => Search Match {{{
+"  5 => Search Match {{{
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
-set showmatch                               " 高亮显示匹配的括号
-set matchtime=5                             " 匹配括号高亮的时间(单位是十分之一秒)
-set ignorecase                              " 在搜索的时候忽略大小写
-set hlsearch                                " 高亮被搜索的句子(phrases)
-set incsearch                               " 在 搜索时,输入的词句的逐字符高亮(类似firefox的搜索)
-set nowrapscan                              " 禁止搜索到文件两端时重新搜索
+set magic                             " 设置魔术匹配控制，可以通过:h magic查看更详细的帮助信息
+set showmatch                         " 高亮显示匹配的括号
+set matchtime=5                       " 匹配括号高亮的时间(单位是十分之一秒)
+" let loaded_matchparen = 1           " 不对匹配的括号进行高亮显示
+set ignorecase                        " 在搜索的时候忽略大小写
+set smartcase                         " 搜索时如果输入大写字符，则忽略上面ignorecase的设置
+set hlsearch                          " 高亮被搜索的句子(phrases)
+set incsearch                         " 在搜索时,输入的词句的逐字符高亮(类似firefox的搜索)
+" set nowrapscan                      " 禁止搜索到文件两端时重新搜索
+
+set wildmenu                          " 增强模式中的命令行自动完成操作,状态栏预览
+set wildmode=list:longest,list:full   " <Tab> completion, list matches, then longest common part, then all.
+set wildignore=*.o,*.pyc              " 忽略一些补全文件
+set completeopt=longest,menu          " 关掉智能补全时的预览窗口，这样可以防止闪屏现象
+set matchpairs+=<:>
+autocmd FileType c,cpp,java set matchpairs+==:;
 "}}}
+"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Appendix => Help {{{
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -652,3 +783,4 @@ set nowrapscan                              " 禁止搜索到文件两端时重�
 "                                           " ex 的地址  1文件第一行 $文件最后一行   0虚拟行,位于文件第一行上方  .光标所在行 'm包含位置标记m的行 '<高亮选区的起始行 >'高亮选区的结束行 %整个文件(:1,$的简写形式)
 "}}
 "}}}
+"
