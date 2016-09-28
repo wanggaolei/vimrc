@@ -34,6 +34,20 @@ if v:progname =~? "evim"
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 0 =>  Behavior {{{
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+silent function! OSX()
+    return has('macunix')
+endfunction
+silent function! LINUX()
+    return has('unix') && !has('macunix') && !has('win32unix')
+endfunction
+silent function! WINDOWS()
+    return  (has('win32') || has('win64'))
+endfunction
+" }}}
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 1 =>  Behavior {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible                        " 取消兼容Vi设置，避免命令冲突
@@ -237,17 +251,28 @@ autocmd BufRead,BufNewFile *.txt setlocal ft=txt
 "                                       " 高亮显示普通txt文件(需要txt.vim脚本)
 "
 "{{ 设置gui界面
-set guioptions-=T                       " 把gui的工具栏去掉
-set guioptions-=m                       " 把gui的菜单去掉
-set guioptions-=r                       " 把gui的右边的滑动条去掉
-set guioptions-=L                       " 把gui的左边的滑动条去掉
-map <silent> <F2> :if &guioptions =~# 'T' <Bar>
-        \set guioptions-=T <Bar>
-        \set guioptions-=m <bar>
-    \else <Bar>
-        \set guioptions+=T <Bar>
-        \set guioptions+=m <Bar>
-    \endif<CR>
+if has("gui_running")
+
+    if LINUX()
+        set guifont=Andale\ Mono\ Regular\ 12,Menlo\ Regular\ 11,Consolas\ Regular\ 12,Courier\ New\ Regular\ 14
+    elseif OSX()
+        set guifont=Andale\ Mono\ Regular:h12,Menlo\ Regular:h11,Consolas\ Regular:h12,Courier\ New\ Regular:h14
+    elseif WINDOWS()
+        set guifont=YaHei\ Consolas\ Hybrid:h11,Microsoft\ YaHei\ Mono:h11.5,Andale_Mono:h11,Menlo:h11,Consolas:h11,Courier_New:h12
+    endif
+    set guioptions-=T                       " 把gui的工具栏去掉
+    set guioptions-=m                       " 把gui的菜单去掉
+    set guioptions-=r                       " 把gui的右边的滑动条去掉
+    set guioptions-=L                       " 把gui的左边的滑动条去掉
+    set guitablabel=%M\ %t
+    map <silent> <F2> :if &guioptions =~# 'T' <Bar>
+            \set guioptions-=T <Bar>
+            \set guioptions-=m <bar>
+        \else <Bar>
+            \set guioptions+=T <Bar>
+            \set guioptions+=m <Bar>
+        \endif<CR>
+endif
 "}}
 "{{                                     " 状态栏
 " 底部状态栏显示。1为关闭，2为开启
