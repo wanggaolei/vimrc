@@ -93,17 +93,21 @@ set autoindent                          " 自动对齐,继承前一行的缩进
 set smartindent                         " 智能对齐
 set cindent                             " 使用c样式的缩进
 set cinoptions={0,1s,t0,n-2,p2s,(03s,=.5s,>1s,=1s,:1s
-set tabstop=4                           " 文本显示时，一个tab对应4个空格
-set expandtab                           " 键盘上按tab键，实际输入tabstop个空格
 "{{ set backspace=2                     " 可以使用backspace键一次删2个
 " 退格键可以删除行首缩进，前一行行末换行，插入模式之前已经存在的字符
 set backspace=indent,eol,start
 "}}
 set whichwrap=b,s,<,>,[,]               " 允许backspace, space和光标键跨越行边界,不允许h,l跨界
+" tab的处理，不同的文件不同的处理方式
+" set tabstop=4                           " 文本显示时，一个tab对应4个空格
+" set expandtab                           " 键盘上按tab键，实际输入tabstop个空格
 "{{ Number of spaces to use for each step of (auto)indent.  Used for 'cindent', >>, <<, etc.
-set shiftwidth=4                        " 自动缩进时，每个缩进尺度
+" set shiftwidth=4                        " 自动缩进时，每个缩进尺度
 "}}
-set softtabstop=4                       " 在按退格键时，如果前面满足4个空格，则会一次性清除
+" set softtabstop=4                       " 在按退格键时，如果前面满足4个空格，则会一次性清除
+autocmd FileType * set tabstop=4|set shiftwidth=4|set softtabstop=4|set noexpandtab
+autocmd BufNewFile,BufRead *.html,*.htm,*.css,*.js set noexpandtab tabstop=2 shiftwidth=2
+autocmd FileType python set tabstop=2|set shiftwidth=2|set softtabstop=2|set expandtab
 "{{ smarttab on在行首输入tab时，插入的空格数以shiftidth为准
 " smarttab off在行首输入tab时，插入的空格数以tabstop或softtabstop数为准
 set smarttab                            " 在行和段开始处使用制表符
