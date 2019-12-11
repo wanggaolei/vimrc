@@ -1,7 +1,20 @@
 # vimrc
-增加下面代码到Windows版本的_vimrc下：
+
+Linux下使用方法：
+```
+git clone git@github.com:wanggaolei/vimrc.git ~/vimrc
+ln -sf ~/vimrc/.vimrc .vimrc
+```
+
+
+Windows下使用方法：
 
 ```
-set runtimepath+= "c:\users\wang\Source\vimrc"
-source C:\\Users\\wang\\Source\\vimrc\\.vimrc
+git clone git@github.com:wanggaolei/vimrc.git C:\Users\wang\vimrc
+```
+添加以下内容到Vim安装目录中_vimrc文件末尾
+
+```
+set runtimepath+= "C:\Users\wang\vimrc"
+source C:\\Users\\wang\\vimrc\\.vimrc
 ```
