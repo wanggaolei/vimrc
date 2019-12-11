@@ -1,17 +1,17 @@
-" --------------------------------------------------------------      
-" Name: Vimrc for Linux                                               
-" Location: ~/.vimrc                                                  
-" Authoer: keelii <keeliizhou@gmail.com>                              
-" Modified: wanggaolei <wanggaolei@gmail.com>                         
-" Reference: http://www.btroot.org                                    
-" 注释说明：                                                          
-" 1，注释必须放在命令在上一行，map命令会把同一行注释也包括进去        
-" 2, 注释+空格+命令超过100列，使用下面格式                            
-" " {{ notes                                                          
-" " -- notes(more)                                                    
-" command                                                             
-" " }}                                                                
-" --------------------------------------------------------------      
+" --------------------------------------------------------------
+" Name: Vimrc for Linux or Windows
+" Location: ~/.vimrc
+" Authoer: keelii <keeliizhou@gmail.com>
+" Modified: wanggaolei <wanggaolei@gmail.com>
+" Reference: http://www.btroot.org
+" 注释说明：
+" 1，注释必须放在命令在上一行，map命令会把同一行注释也包括进去
+" 2, 注释+空格+命令超过100列，使用下面格式
+" " {{ notes
+" " -- notes(more)
+" command
+" " }}
+" --------------------------------------------------------------
 
 " 0 => Startup {{{
 " {{ When started as "evim",
@@ -153,7 +153,7 @@ set nowrap
 " 整词换行
 set linebreak
 " 每行显示多少字符
-set textwidth=100
+set textwidth=78
 " 高亮显示当前行
 set cursorline
 " 高亮光标列
@@ -163,7 +163,7 @@ autocmd WinLeave * set nocursorline nocursorcolumn
 autocmd WinEnter * set cursorline cursorcolumn
 " }}
 " 红色高亮第101行.
-set colorcolumn=101
+set colorcolumn=80
 " 光标移动到buffer的顶部和底部时保持3行距离
 set scrolloff=3
 " 设置行号
@@ -195,7 +195,7 @@ syntax on
 " }}
 set number
 " 窗口大小
-set lines=35 columns=140
+set lines=35 columns=100
 " 分割窗口在右侧
 set splitright
 " 分割窗口在下侧
