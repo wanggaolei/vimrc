@@ -1,13 +1,13 @@
-# vimrc
+# Vimrc
 
-Linux下使用方法：
+## Linux下使用方法：
 ```
 git clone git@github.com:wanggaolei/vimrc.git ~/vimrc
 ln -sf ~/vimrc/.vimrc .vimrc
 ```
 
 
-Windows下使用方法：
+## Windows下使用方法：
 
 ```
 git clone git@github.com:wanggaolei/vimrc.git C:\Users\wang\vimrc
