@@ -195,7 +195,7 @@ syntax on
 " }}
 set number
 " 窗口大小
-set lines=35 columns=100
+" set lines=35 columns=100
 " 分割窗口在右侧
 set splitright
 " 分割窗口在下侧
