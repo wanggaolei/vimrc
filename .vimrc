@@ -409,5 +409,6 @@ function! RemoveTrailingWhitespace()
         call cursor(b:curline, b:curcol)
     endif
 endfunction
-autocmd BufWritePre * call RemoveTrailingWhitespace()
+" autocmd BufWritePre * call RemoveTrailingWhitespace()
+nmap <leader>clsp :call RemoveTrailingWhitespace()<CR>
 " }}}
