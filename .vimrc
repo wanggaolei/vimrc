@@ -152,10 +152,10 @@ set novisualbell
 set nowrap
 " 整词换行
 set linebreak
-" 每行显示多少字符
-set textwidth=78
-" 高亮显示当前行
-set cursorline
+" 编辑时，该行字数超过此值，就强制插入换行符换行 
+set textwidth=0
+" 高亮显示当前行, 会在当前行下显示一线，下划线会被遮挡，不适合编程变量
+set nocursorline
 " 高亮光标列
 set cursorcolumn
 " {{ 自动调整窗口高亮行和列
