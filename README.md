@@ -1,6 +1,6 @@
 # Usage
-Place .vimrc to $HOME
-Copy .vim/init to $HOME/.vim/init
+1. Place .vimrc to $HOME  
+1. Copy .vim/init to $HOME/.vim/init
 
 # VIM-Plug Installation
 ## Unix/Linux
