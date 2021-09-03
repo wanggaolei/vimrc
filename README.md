@@ -1,20 +1,18 @@
-# Vimrc
+# Usage
+Place .vimrc to $HOME
+Copy .vim/init to $HOME/.vim/init
 
-## Linux下使用方法：
+# VIM-Plug Installation
+## Unix/Linux
 ```
-git clone git@github.com:wanggaolei/vimrc.git ~/vimrc
-ln -sf ~/vimrc/.vimrc .vimrc
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 ```
 
-
-## Windows下使用方法：
-
+## Windows (PowerShell)
 ```
-git clone git@github.com:wanggaolei/vimrc.git C:\Users\wang\vimrc
+iwr -useb https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim |`
+    ni $HOME/vimfiles/autoload/plug.vim -Force
 ```
-添加以下内容到Vim安装目录中_vimrc文件末尾
-
-```
-set runtimepath+= "C:\Users\wang\vimrc"
-source C:\\Users\\wang\\vimrc\\.vimrc
-```
+# Plugins Installation
+Run :PlugInstall in Vim.
