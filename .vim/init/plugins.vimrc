@@ -1,14 +1,14 @@
 " $HOME/.vim/init/plugins.vimrc
 
 
-"Õâ¸öÊÇ°²×°×ÖÌåºó ±ØĞëÉèÖÃ´ËÏî" 
+"è¿™ä¸ªæ˜¯å®‰è£…å­—ä½“å å¿…é¡»è®¾ç½®æ­¤é¡¹" 
 " let g:airline_powerline_fonts = 1   
  
- "ÉèÖÃÇĞ»»Buffer¿ì½İ¼ü"
+ "è®¾ç½®åˆ‡æ¢Bufferå¿«æ·é”®"
  nnoremap <C-N> :bn<CR>
  nnoremap <C-P> :bp<CR>
 
-" ÔÚGvimÖĞÎÒÉèÖÃÁËÓ¢ÎÄÓÃHermit£¬ ÖĞÎÄÊ¹ÓÃ YaHei Mono "
+" åœ¨Gvimä¸­æˆ‘è®¾ç½®äº†è‹±æ–‡ç”¨Hermitï¼Œ ä¸­æ–‡ä½¿ç”¨ YaHei Mono "
 if has('win32')
 "  set guifont=Sauce_Code_Powerline:h13:cANSI
   set guifont=Inconsolata\ for\ Powerline:h13
