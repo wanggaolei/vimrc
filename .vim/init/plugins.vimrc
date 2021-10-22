@@ -2,7 +2,7 @@
 
 
 "这个是安装字体后 必须设置此项" 
-" let g:airline_powerline_fonts = 1   
+let g:airline_powerline_fonts = 1   
  
  "设置切换Buffer快捷键"
  nnoremap <C-N> :bn<CR>
