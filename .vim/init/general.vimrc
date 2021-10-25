@@ -20,6 +20,7 @@ set wildmenu                " visual autocomplete for command menu
 "设置切换Buffer快捷键"
 nnoremap <C-N> :bn<CR>
 nnoremap <C-P> :bp<CR>
+inoremap jk <ESC>
 
 " 在Gvim中我设置了英文用Hermit， 中文使用 YaHei Mono "
 if has('win32')
