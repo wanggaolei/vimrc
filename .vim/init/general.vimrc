@@ -16,3 +16,14 @@ set incsearch               " search as characters are entered
 set hlsearch                " highlight matches
 set ignorecase              " be smart about case in search
 set wildmenu                " visual autocomplete for command menu
+
+"设置切换Buffer快捷键"
+nnoremap <C-N> :bn<CR>
+nnoremap <C-P> :bp<CR>
+
+" 在Gvim中我设置了英文用Hermit， 中文使用 YaHei Mono "
+if has('win32')
+"  set guifont=Sauce_Code_Powerline:h13:cANSI
+  set guifont=Inconsolata\ for\ Powerline:h13
+"  set guifontwide=Microsoft_YaHei_Mono:h12
+endif
