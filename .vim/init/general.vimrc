@@ -36,3 +36,8 @@ if has("gui_running")
     set guifont=DroidSansMono_Nerd_Font_Book:h11:cDEFAULT
   endif
 endif
+
+" 设置行号
+set number
+" 相对行号
+set relativenumber
