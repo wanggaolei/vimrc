@@ -33,7 +33,8 @@ if has("gui_running")
   elseif has("x11")
     set guifont=-*-courier-medium-r-normal-*-*-180-*-*-m-*-*
   else
-    set guifont=DroidSansMono_Nerd_Font_Book:h11:cDEFAULT
+"    set guifont=DroidSansMono_NF:h13:cDEFAULT
+    set guifont=monofur_for_Powerline:h13:cDEFAULT
   endif
 endif
 
@@ -41,3 +42,7 @@ endif
 set number
 " 相对行号
 set relativenumber
+
+" 解决菜单乱码
+source $VIMRUNTIME/delmenu.vim
+source $VIMRUNTIME/menu.vim
