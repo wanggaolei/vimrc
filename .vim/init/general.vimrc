@@ -170,7 +170,7 @@ set showmode
 " 把gui的工具栏去掉
 set guioptions-=T
 " 把gui的菜单去掉
-set guioptions-=m
+" set guioptions-=m
 " 把gui的右边的滑动条去掉
 set guioptions-=r
 " 把gui的左边的滑动条去掉
@@ -197,8 +197,17 @@ if has("gui_running")
   elseif has("x11")
     set guifont=-*-courier-medium-r-normal-*-*-180-*-*-m-*-*
   else
-"    set guifont=DroidSansMono_NF:h13:cDEFAULT
-    set guifont=monofur_for_Powerline:h13:cDEFAULT
+"    set guifont=monofur_for_Powerline:h13:cDEFAULT
+"    set guifont=NovaMono_for_Powerline:h12:cDEFAULT
+"    set guifont=DroidSansMono_NF:h12:cDEFAULT
+"    set guifont=Inconsolata:h12:cDEFAULT
+"    set guifont=Inconsolata-g_for_Powerline:h12:cDEFAULT
+"    set guifont=Roboto_Mono_for_Powerline:b:cDEFAULT
+"    set guifont=Source\ Code\ Pro\ for\ Powerline:h11:cDEFAULT
+"    set guifontwide=Source\ Code\ Pro\ for\ Powerline:h11:cANSI
+"    set guifont=Droid\ Sans\ Mono\ Slashed\ for\ Pow:h11:cDEFAULT
+"    set guifont=Droid\ Sans\ Mono\ Dotted\ for\ Powe:h11:cDEFAULT
+    set guifont=Hack_NF:h11:cDEFAULT
   endif
 endif
 " }}}

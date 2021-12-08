@@ -23,6 +23,7 @@ iwr -useb https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim |`
 Luanch Vim, run :PlugInstall in Vim.
 
 ## Fonts Installation
+### Powerline Fonts
 ```
 git clone https://github.com/powerline/fonts.git --depth=1
 cd fonts
@@ -30,5 +31,7 @@ cd fonts
 cd ..
 rm -rf fonts
 ```
+### Nerd Fonts
 
+https://www.nerdfonts.com/font-downloads
 
